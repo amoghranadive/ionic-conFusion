@@ -331,19 +331,11 @@ angular.module('conFusion.controllers', [])
             );       
     }])
 
-    .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function ($scope, dishes, favorites, menuFactory, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
+    .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$timeout', function ($scope, dishes, favorites, menuFactory, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $timeout) {
 
             $scope.baseURL = baseURL;
             $scope.shouldShowDelete = false;
         
-            $ionicLoading.show({
-               template: '<ion-spinner></ion-spinner> Loading...' 
-            });
-        
-            $timeout(function(){
-                        $ionicLoading.hide();
-                    }, 1000);
-
             $scope.favorites = favorites;
 
             $scope.dishes = dishes;
