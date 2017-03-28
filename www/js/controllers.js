@@ -72,7 +72,7 @@ angular.module('conFusion.controllers', [])
     
 })
 
-   .controller('MenuController', ['$scope', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', function($scope, menuFactory, favoriteFactory, baseURL, $ionicListDelegate) {
+   .controller('MenuController', ['$scope', 'dishes', 'favoriteFactory', 'baseURL', '$ionicListDelegate', function($scope, dishes, favoriteFactory, baseURL, $ionicListDelegate) {
 
         $scope.tab = 1;
         $scope.filtText = '';
@@ -83,15 +83,7 @@ angular.module('conFusion.controllers', [])
        
        $scope.baseURL = baseURL;
         
-        $scope.dishes = menuFactory.query(
-            function(response) {
-                $scope.dishes = response;
-                $scope.showMenu = true;
-            },
-            function(response) {
-                $scope.message = "Error: " + response.status + " " + response.statusText;
-            }
-        );
+        $scope.dishes = dishes;
             
         $scope.select = function(setTab) {
             $scope.tab = setTab;
@@ -274,7 +266,7 @@ angular.module('conFusion.controllers', [])
             };
     }])
 
-    .controller('IndexController', ['$scope', 'menuFactory', 'promotionFactory', 'corporateFactory', 'baseURL', function($scope, menuFactory, promotionFactory, corporateFactory, baseURL) {
+    .controller('IndexController', ['$scope', 'dish', 'promotion', 'leader', 'baseURL', function($scope, dish, promotion, leader, baseURL) {
         
             $scope.showDish = false;
             $scope.message = "Loading...";
@@ -287,48 +279,22 @@ angular.module('conFusion.controllers', [])
         
             $scope.baseURL = baseURL;
         
-            $scope.dish = menuFactory.get({id:0})
-                .$promise.then(
-                    function(response) {
-                        $scope.dish = response;
-                        $scope.showDish = true;
-                    },
-                    function(response) {
-                        $scope.message = "Error: " + response.status + " " + response.statusText;
-                    }
-            );
+            $scope.dish = dish;
         
-            $scope.promotion = promotionFactory.get({id:0});
+            $scope.promotion = promotion;
         
-            $scope.leader = corporateFactory.getLeaders().get({id:0})
-                .$promise.then(
-                    function(response) {
-                        $scope.leader = response;
-                        $scope.showChef = true;
-                    },
-                    function(response) {
-                        $scope.chefMessage = "Error: " + response.status + " " + response.statusText;
-                    }
-            );
+            $scope.leader = leader;
         
     }])
 
-    .controller('AboutController', ['$scope', 'corporateFactory', 'baseURL', function($scope, corporateFactory, baseURL) {
+    .controller('AboutController', ['$scope', 'leaders', 'baseURL', function($scope, leaders, baseURL) {
         
             $scope.showLeaders = false;
             $scope.message = "Loading...";
         
             $scope.baseURL = baseURL;
             
-            $scope.leaders = corporateFactory.getLeaders().query(
-                function(response) {
-                    $scope.leaders = response;
-                    $scope.showLeaders = true;
-                },
-                function(response) {
-                    $scope.message = "Error: " + response.status + " " + response.statusText;
-                }
-            );       
+            $scope.leaders = leaders;       
     }])
 
     .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$timeout', function ($scope, dishes, favorites, menuFactory, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $timeout) {
